@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.DS_Store
+package-lock.json
+src/config/*.local.js
+.idea
+.vscode/
+.env
+## local config for neovim
+.nvimrc
+
+## VIM
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
