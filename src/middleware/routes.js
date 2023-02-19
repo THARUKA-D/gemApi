@@ -1,31 +1,24 @@
-const sqlController = require("../controllers/sql-controller");
-
-// Defines routes and their handlers for incoming requests
+const mongoController = require("../controllers/mongo-controller");
 
 const routes = [
 	{
-		path: "/",
-		handler: sqlController.healthCheck,
-		method: "get",
-	},
-	{
-		path: "/newUser",
-		handler: sqlController.addNewUser,
+		path: "/fetchAllBuyers",
+		handler: mongoController.fetchAllBuyers,
 		method: "post",
 	},
 	{
-		path: "/addHobbies",
-		handler: sqlController.addHobbies,
+		path: "/addNewGemInfo",
+		handler: mongoController.addNewGemInfo,
 		method: "post",
 	},
-  {
-		path: "/fetchAllUsers",
-		handler: sqlController.fetchAllUsers,
-		method: "get",
+	{
+		path: "/userSignUp",
+		handler: mongoController.userSignUp,
+		method: "post",
 	},
-  {
-		path: "/login",
-		handler: sqlController.login,
+	{
+		path: "/userLogIn",
+		handler: mongoController.userLogIn,
 		method: "post",
 	},
 ];
