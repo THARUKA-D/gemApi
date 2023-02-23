@@ -21,6 +21,26 @@ const routes = [
 		handler: mongoController.userLogIn,
 		method: "post",
 	},
+	{
+		path: "/fetchGemsByUserId",
+		handler: mongoController.fetchGemsByUserId,
+		method: "post",
+	},
+	{
+		path: "/sheduleAppointment",
+		handler: mongoController.sheduleAppointment,
+		method: "post",
+	},
+	{
+		path: "/getAppoinmentsBySellerId",
+		handler: mongoController.getAppoinmentsBySellerId,
+		method: "post",
+	},
+	{
+		path: "/getAppoinmentsByBuyerId",
+		handler: mongoController.getAppoinmentsByBuyerId,
+		method: "post",
+	},
 ];
 
 module.exports = {
