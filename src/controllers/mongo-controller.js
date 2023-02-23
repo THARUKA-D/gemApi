@@ -145,7 +145,7 @@ const userLogIn = async (req, res) => {
 	try {
 		const db = mongo.collection("users");
 
-		const myDoc = await db.findOne({ name: body.userName });
+		const myDoc = await db.findOne({ email: body.email });
 		if (body.password === myDoc.password) {
 			res.status(200).send({
 				success: true,
