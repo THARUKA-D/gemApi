@@ -92,11 +92,22 @@ const sheduleAppointment = async (req, res) => {
 			_id: new ObjectID(sellerId),
 		});
 
+			const buyerInfoDb = mongo.collection("users");
+		const buyerInfo = await buyerInfoDb.findOne({
+			_id: new ObjectID(gemInfo.userId),
+		});
+
 		const sheduleAppoinmemt = {
 			gemId: gemId,
 			sellerId: sellerId,
 			buyerId: gemInfo.userId,
+			buyerDescription: gemInfo.description,
+			buyerMobile: buyerInfo.mobile,
+			buyerEmail: buyerInfo.email,
+			buyerAddress: gemInfo.address,
 			sellerName: sellerInfo.name,
+			sellerMobile: sellerInfo.mobile,
+			sellerEmail: sellerInfo.email,
 			sheduleDate: appointment.sheduleDate,
 			sheduleTime: appointment.sheduleTime,
 			gemName: gemInfo.gemName,
