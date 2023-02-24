@@ -101,6 +101,7 @@ const sheduleAppointment = async (req, res) => {
 			gemId: gemId,
 			sellerId: sellerId,
 			buyerId: gemInfo.userId,
+			buyerName: buyerInfo.name,
 			buyerDescription: gemInfo.description,
 			buyerMobile: buyerInfo.mobile,
 			buyerEmail: buyerInfo.email,
