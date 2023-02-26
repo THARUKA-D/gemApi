@@ -27,18 +27,38 @@ const routes = [
 		method: "post",
 	},
 	{
-		path: "/sheduleAppointment",
-		handler: mongoController.sheduleAppointment,
+		path: "/scheduleAppointment",
+		handler: mongoController.scheduleAppointment,
 		method: "post",
 	},
 	{
-		path: "/getAppoinmentsBySellerId",
-		handler: mongoController.getAppoinmentsBySellerId,
+		path: "/getAppointmentsBySellerId",
+		handler: mongoController.getAppointmentsBySellerId,
 		method: "post",
 	},
 	{
-		path: "/getAppoinmentsByBuyerId",
-		handler: mongoController.getAppoinmentsByBuyerId,
+		path: "/getAppointmentsByBuyerId",
+		handler: mongoController.getAppointmentsByBuyerId,
+		method: "post",
+	},
+	{
+		path: "/deleteGemInfo",
+		handler: mongoController.deleteGemInfo,
+		method: "post",
+	},
+	{
+		path: "/updateGemInfo",
+		handler: mongoController.updateGemInfo,
+		method: "post",
+	},
+	{
+		path: "/updateAppointment",
+		handler: mongoController.updateAppointment,
+		method: "post",
+	},
+	{
+		path: "/deleteAppointment",
+		handler: mongoController.deleteAppointment,
 		method: "post",
 	},
 ];

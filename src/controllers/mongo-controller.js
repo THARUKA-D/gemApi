@@ -38,7 +38,7 @@ const fetchGemsByUserId = async (req, res) => {
 	}
 };
 
-const getAppoinmentsByBuyerId = async (req, res) => {
+const getAppointmentsByBuyerId = async (req, res) => {
 	try {
 		const mongo = await mongoConnection();
 		const db = mongo.collection("appointments");
@@ -56,7 +56,7 @@ const getAppoinmentsByBuyerId = async (req, res) => {
 	}
 };
 
-const getAppoinmentsBySellerId = async (req, res) => {
+const getAppointmentsBySellerId = async (req, res) => {
 	try {
 		const mongo = await mongoConnection();
 		const db = mongo.collection("appointments");
@@ -74,7 +74,7 @@ const getAppoinmentsBySellerId = async (req, res) => {
 	}
 };
 
-const sheduleAppointment = async (req, res) => {
+const scheduleAppointment = async (req, res) => {
 	const appointment = req.body;
 
 	const gemId = appointment.gemId;
@@ -92,7 +92,7 @@ const sheduleAppointment = async (req, res) => {
 			_id: new ObjectID(sellerId),
 		});
 
-			const buyerInfoDb = mongo.collection("users");
+		const buyerInfoDb = mongo.collection("users");
 		const buyerInfo = await buyerInfoDb.findOne({
 			_id: new ObjectID(gemInfo.userId),
 		});
@@ -218,13 +218,142 @@ const userSignUp = async (req, res) => {
 	}
 };
 
+const deleteAppointment = async (req, res) => {
+	try {
+		const mongo = await mongoConnection();
+		const db = mongo.collection("appointments");
+
+		const result = await db.deleteOne({
+			_id: new ObjectID(req.body.appointmentId),
+		});
+
+		if (result.deletedCount === 1) {
+			console.log("Successfully deleted one document.");
+		} else {
+			res.status(500).send({
+				success: false,
+				error: "No documents matched the query. Deleted 0 documents.",
+			});
+
+			return;
+		}
+		res.status(200).send({
+			success: true,
+			data: [],
+		});
+	} catch {
+		res.status(500).send({
+			success: false,
+			data: [],
+		});
+	}
+};
+
+const updateAppointment = async (req, res) => {
+	try {
+		const mongo = await mongoConnection();
+		const db = mongo.collection("appointments");
+
+		const { appointmentId, ...updateValues } = req.body;
+
+		const filter = { _id: new ObjectID(appointmentId) };
+
+		const updateDoc = {
+			$set: {
+				...updateValues,
+			},
+		};
+
+		await db.updateOne(filter, updateDoc);
+
+		res.status(200).send({
+			success: true,
+			data: [],
+		});
+	} catch {
+		res.status(500).send({
+			success: false,
+			data: [],
+		});
+	}
+};
+
+const updateGemInfo = async (req, res) => {
+	try {
+		const mongo = await mongoConnection();
+		const db = mongo.collection("gemInfo");
+
+		const { gemId, ...updateValues } = req.body;
+
+		const filter = { _id: new ObjectID(gemId) };
+
+		const updateDoc = {
+			$set: {
+				...updateValues,
+			},
+		};
+
+		await db.updateOne(filter, updateDoc);
+
+		res.status(200).send({
+			success: true,
+			data: [],
+		});
+	} catch {
+		res.status(500).send({
+			success: false,
+			data: [],
+		});
+	}
+};
+
+const deleteGemInfo = async (req, res) => {
+	try {
+		const mongo = await mongoConnection();
+		const db = mongo.collection("gemInfo");
+
+		const result = await db.deleteOne({
+			_id: new ObjectID(req.body.gemId),
+		});
+
+		if (result.deletedCount === 1) {
+			console.log("Successfully deleted one document.");
+		} else {
+			res.status(500).send({
+				success: false,
+				error: "No documents matched the query. Deleted 0 documents.",
+			});
+			return;
+		}
+
+		const appointmentsDb = mongo.collection("appointments");
+		await appointmentsDb.deleteMany({
+			gemId: req.body.gemId,
+		});
+
+		res.status(200).send({
+			success: true,
+			data: [],
+		});
+	} catch {
+		res.status(500).send({
+			success: false,
+			data: [],
+		});
+	}
+};
+
 module.exports = {
 	fetchAllBuyers,
 	addNewGemInfo,
 	userLogIn,
 	userSignUp,
 	fetchGemsByUserId,
-	sheduleAppointment,
-	getAppoinmentsBySellerId,
-	getAppoinmentsByBuyerId,
+	scheduleAppointment,
+	getAppointmentsBySellerId,
+	getAppointmentsByBuyerId,
+	deleteGemInfo,
+	updateGemInfo,
+	updateAppointment,
+	deleteAppointment,
 };
